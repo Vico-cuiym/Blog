@@ -3,38 +3,47 @@ title: BIO NIO AIO的区别
 tags: 
 - java
 category:
-- java随笔
+- 手记
 ---
-## Quick Start
-
-### Create a new post
-
-``` bash
-$ hexo new "My New Post"
+本人比较喜欢带着问题去学习 , 学习之前我们先问自己两个问题 , 方便能找到问题答案
 ```
-
-More info: [Writing](https://hexo.io/docs/writing.html)
-
-### Run server
-
-``` bash
-$ hexo server
+	1、什么是IO
+	2、同步、异步、阻塞、非阻塞分别是什么 , 用来干什么
 ```
+## IO介绍
 
-More info: [Server](https://hexo.io/docs/server.html)
+我们通常说的IO其实就是Input/Output的缩写 , 中文即输入、输出的缩写
 
-### Generate static files
+### 1. BIO、NIO、AIO的区别
 
-``` bash
-$ hexo generate
-```
+#### 1.1 BIO(Blocking IO)
 
-More info: [Generating](https://hexo.io/docs/generating.html)
+即同步阻塞IO，是流的基本实现方式，交互时是同步阻塞的方式，也就是说在读取或写入流未完成时，线程会阻塞在那里<br>调用时是十分可靠的，因为线程是安全的，毕竟在没操作完之前都会锁住<br>优点：实现简单、线程安全<br>缺点：效率低、扩展性差（就是不在能同一时刻做多个事情）
 
-### Deploy to remote sites
+#### 1.2 NIO(UnBlocking IO)
 
-``` bash
-$ hexo deploy
-```
+即同步非阻塞IO，是基于事件和回调机制实现，主要是解决BIO的高并发的问题：在网络应用中，如果要同时处理多个请求，就要使用多线程。也就是说，将每个请求给一个线程进行单独处理，虽然能理论上能解决，但实际是残忍的。每创建一个线程就需要系统分配一定的内存空间，而操作系统本身对线程总数就有一定的限制。所以如果请求过多，服务器可能会拒绝请求，甚至会宕机。当socket有流可读或者可写时，操作系统会通知应用程序进行处理，应用程序再处理这个流。也就是说，这个时候，这个流是有效的，不再是以前的有一个请求就创建一个线程了，当socket没有数据时，是没有线程来进行处理。<br>优点：效率高<br>缺点：编码会复杂、要处理半包的情况
 
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+#### 1.3 AIO(Asynchronous IO)
+
+即异步非阻塞IO，是基于事件和回调机制实现，也就是在操作完成之后，会直接返回，不会阻塞在那里，当后台处理完成之后，会通知相应的线程进行后续的操作<br>优点：可以异步、效率高<br>缺点：会比一个线程读取数据复杂
+
+## 同步、异步、阻塞、非阻塞
+
+上面解释了一下IO的是什么，但是引入了同步、异步、阻塞、非阻塞的概念，现在解释下这些概念
+
+### 1. 同步与异步
+
+#### 1.1 同步
+
+当一个A任务需要依赖B任务时，A任务只有等到B任务结束才能继续执行，这是线程安全的。要么都成功，要么都失败，两个任务的状态是一致的。
+
+#### 1.1 异步
+
+
+### 2. 阻塞与非阻塞
+
+
+
+
+
